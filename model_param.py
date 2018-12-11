@@ -1,0 +1,10 @@
+embed_dim = 300
+kernel_num = 20
+kernel_sizes = [3, 4, 5]
+pretrain = True
+embed_freeze = True
+class_num = 2
+dropout = 0.5
+d_input_dims = 60
+d_hidden_dims = 60
+d_output_dims = 2
