@@ -1,12 +1,12 @@
 """Adversarial adaptation to train target encoder."""
 
 import os
-
 import torch
 import torch.optim as optim
 from torch import nn
-import params
+from params import param
 from utils import make_cuda
+
 
 def train_tgt(src_encoder, tgt_encoder, critic,
               src_data_loader, tgt_data_loader):
@@ -22,18 +22,18 @@ def train_tgt(src_encoder, tgt_encoder, critic,
     # setup criterion and optimizer
     criterion = nn.CrossEntropyLoss()
     optimizer_tgt = optim.Adam(tgt_encoder.parameters(),
-                               lr=params.c_learning_rate,
-                               betas=(params.beta1, params.beta2))
+                               lr=param.c_learning_rate,
+                               betas=(param.beta1, param.beta2))
     optimizer_critic = optim.Adam(critic.parameters(),
-                                  lr=params.d_learning_rate,
-                                  betas=(params.beta1, params.beta2))
+                                  lr=param.d_learning_rate,
+                                  betas=(param.beta1, param.beta2))
     len_data_loader = min(len(src_data_loader), len(tgt_data_loader))
 
     ####################
     # 2. train network #
     ####################
 
-    for epoch in range(params.num_epochs):
+    for epoch in range(param.num_epochs):
         # zip source and target data pair
         data_zip = enumerate(zip(src_data_loader, tgt_data_loader))
         for step, ((reviews_src, _), (reviews_tgt, _)) in data_zip:
@@ -93,11 +93,11 @@ def train_tgt(src_encoder, tgt_encoder, critic,
             #######################
             # 2.3 print step info #
             #######################
-            if ((step + 1) % params.log_step == 0):
+            if (step + 1) % param.log_step == 0:
                 print("Epoch [{}/{}] Step [{}/{}]:"
                       "d_loss={:.5f} g_loss={:.5f} acc={:.5f}"
                       .format(epoch + 1,
-                              params.num_epochs,
+                              param.num_epochs,
                               step + 1,
                               len_data_loader,
                               loss_critic.item(),
@@ -107,18 +107,18 @@ def train_tgt(src_encoder, tgt_encoder, critic,
         #############################
         # 2.4 save model parameters #
         #############################
-        if ((epoch + 1) % params.save_step == 0):
+        if (epoch + 1) % param.save_step == 0:
             torch.save(critic.state_dict(), os.path.join(
-                params.model_root,
+                param.model_root,
                 "ADDA-critic-{}.pt".format(epoch + 1)))
             torch.save(tgt_encoder.state_dict(), os.path.join(
-                params.model_root,
+                param.model_root,
                 "ADDA-target-encoder-{}.pt".format(epoch + 1)))
 
     torch.save(critic.state_dict(), os.path.join(
-        params.model_root,
+        param.model_root,
         "ADDA-critic-final.pt"))
     torch.save(tgt_encoder.state_dict(), os.path.join(
-        params.model_root,
+        param.model_root,
         "ADDA-target-encoder-final.pt"))
     return tgt_encoder

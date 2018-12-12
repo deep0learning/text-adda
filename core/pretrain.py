@@ -2,8 +2,7 @@
 
 import torch.nn as nn
 import torch.optim as optim
-
-import params
+from params import param
 from utils import save_model
 
 
@@ -12,26 +11,26 @@ def train_src(encoder, classifier, data_loader, data_loader_eval):
     ####################
     # 1. setup network #
     ####################
-
-    # set train state for Dropout and BN layers
-    encoder.train()
-    classifier.train()
+    # instantiate EarlyStop
+    earlystop = EarlyStop(param.patience)
 
     # setup criterion and optimizer
     optimizer = optim.Adam(
         list(encoder.parameters()) + list(classifier.parameters()),
-        lr=params.c_learning_rate,
-        betas=(params.beta1, params.beta2))
+        lr=param.c_learning_rate,
+        betas=(param.beta1, param.beta2))
     criterion = nn.CrossEntropyLoss()
 
     ####################
     # 2. train network #
     ####################
 
-    for epoch in range(params.num_epochs_pre):
+    for epoch in range(param.num_epochs_pre):
         for step, (reviews, labels) in enumerate(data_loader):
-            # make labels squeezed
-            labels = labels.squeeze_()
+
+            # set train state for Dropout and BN layers
+            encoder.train()
+            classifier.train()
 
             # zero gradients for optimizer
             optimizer.zero_grad()
@@ -45,25 +44,28 @@ def train_src(encoder, classifier, data_loader, data_loader_eval):
             optimizer.step()
 
             # print step info
-            # if ((step + 1) % params.log_step_pre == 0):
-            #     print("Epoch [{}/{}] Step [{}/{}]: loss={}"
-            #           .format(epoch + 1,
-            #                   params.num_epochs_pre,
-            #                   step + 1,
-            #                   len(data_loader),
-            #                   loss.item()))
+            if ((step + 1) % param.log_step_pre == 0):
+                print("Epoch [{}/{}] Step [{}/{}]: loss={}"
+                      .format(epoch + 1,
+                              param.num_epochs_pre,
+                              step + 1,
+                              len(data_loader),
+                              loss.item()))
 
         # eval model on test set
-        if ((epoch + 1) % params.eval_step_pre == 0):
-            print('Epoch [{}/{}]'.format(epoch + 1, params.num_epochs_pre))
+        if (epoch + 1) % param.eval_step_pre == 0:
+            # print('Epoch [{}/{}]'.format(epoch + 1, param.num_epochs_pre))
             eval_src(encoder, classifier, data_loader)
-            eval_src(encoder, classifier, data_loader_eval)
+            earlystop.update(eval_src(encoder, classifier, data_loader_eval, True))
+            print()
 
         # save model parameters
-        if ((epoch + 1) % params.save_step_pre == 0):
+        if (epoch + 1) % param.save_step_pre == 0:
             save_model(encoder, "ADDA-source-encoder-{}.pt".format(epoch + 1))
-            save_model(
-                classifier, "ADDA-source-classifier-{}.pt".format(epoch + 1))
+            save_model(classifier, "ADDA-source-classifier-{}.pt".format(epoch + 1))
+
+        if earlystop.stop:
+            break
 
     # # save final model
     save_model(encoder, "ADDA-source-encoder-final.pt")
@@ -72,7 +74,7 @@ def train_src(encoder, classifier, data_loader, data_loader_eval):
     return encoder, classifier
 
 
-def eval_src(encoder, classifier, data_loader):
+def eval_src(encoder, classifier, data_loader, out=False):
     """Evaluate classifier for source domain."""
     # set eval state for Dropout and BN layers
     encoder.eval()
@@ -87,7 +89,6 @@ def eval_src(encoder, classifier, data_loader):
 
     # evaluate network
     for (reviews, labels) in data_loader:
-        labels = labels.squeeze_()
 
         preds = classifier(encoder(reviews))
         loss += criterion(preds, labels).item()
@@ -99,3 +100,24 @@ def eval_src(encoder, classifier, data_loader):
     acc /= len(data_loader.dataset)
 
     print("Avg Loss = {}, Avg Accuracy = {:2%}".format(loss, acc))
+
+    if out:
+        return loss
+
+
+class EarlyStop:
+    def __init__(self, patience):
+        self.count = 0
+        self.maxAcc = 0
+        self.patience = patience
+        self.stop = False
+
+    def update(self, acc):
+        if acc < self.maxAcc:
+            self.count += 1
+        else:
+            self.count = 0
+            self.maxAcc = acc
+
+        if self.count > self.patience:
+            self.stop = True

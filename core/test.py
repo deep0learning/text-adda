@@ -18,10 +18,8 @@ def eval_tgt(encoder, classifier, data_loader):
 
     # evaluate network
     for (reviews, labels) in data_loader:
-        labels = labels.squeeze_()
         preds = classifier(encoder(reviews))
         loss += criterion(preds, labels).item()
-
         pred_cls = preds.data.max(1)[1]
         acc += pred_cls.eq(labels.data).cpu().sum().item()
 

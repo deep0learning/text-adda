@@ -24,8 +24,8 @@ num_epochs_pre = 200
 log_step_pre = 32
 eval_step_pre = 10
 save_step_pre = 100
-num_epochs = 100
-log_step = 20
+num_epochs = 10
+log_step = 32
 save_step = 100
 manual_seed = None
 
@@ -34,3 +34,9 @@ d_learning_rate = 1e-4
 c_learning_rate = 1e-4
 beta1 = 0.5
 beta2 = 0.9
+
+# param for sequence length
+maxlen = 200
+
+# param for patience
+patience = 3
