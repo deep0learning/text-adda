@@ -8,7 +8,9 @@ A PyTorch implementation of [Adversarial Discriminative Domain Adaptation](https
 ## run main
 
 ```
-python3 main.py
+python main.py --seqlen 200 --patience 5 --num_epochs_pre 200 ^
+				--log_step_pre 32 --eval_step_pre 10 --save_step_pre 100 ^
+				--num_epochs 100 --log_step 32 --save_step 100
 ```
 
 ### arguments
@@ -26,21 +28,21 @@ Specify Params for Experimental Setting
 
 optional arguments:
   -h, --help            show this help message and exit
-  --seqlen SEQLEN       Specify maximum sequence length
-  --patience PATIENCE   Specify patience of early stopping for pretrain
+  --seqlen SEQLEN       Specify maximum sequence length (default: 200)
+  --patience PATIENCE   Specify patience of early stopping for pretrain (default: 5)
   --num_epochs_pre NUM_EPOCHS_PRE
-                        Specify the number of epochs for pretrain
+                        Specify the number of epochs for pretrain (default: 200)
   --log_step_pre LOG_STEP_PRE
-                        Specify log step size for pretrain
+                        Specify log step size for pretrain (default: 32)
   --eval_step_pre EVAL_STEP_PRE
-                        Specify eval step size for pretrain
+                        Specify eval step size for pretrain (default: 10)
   --save_step_pre SAVE_STEP_PRE
-                        Specify save step size for pretrain
+                        Specify save step size for pretrain (default: 100)
   --num_epochs NUM_EPOCHS
-                        Specify the number of epochs for adaptation
-  --log_step LOG_STEP   Specify log step size for adaptation
+                        Specify the number of epochs for adaptation (default: 100)
+  --log_step LOG_STEP   Specify log step size for adaptation (default: 32)
   --save_step SAVE_STEP
-                        Specify save step size for adaptation
+                        Specify save step size for adaptation (default: 100)
 ```
 
 ## Network
