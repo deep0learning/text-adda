@@ -18,7 +18,7 @@ if __name__ == '__main__':
     parser.add_argument('--tgt', type=str, default="dvd", choices=["books", "dvd", "electronics", "kitchen"],
                         help="Specify tgt dataset")
 
-    parser.add_argument('--enc_train', default=False, action='store_false',
+    parser.add_argument('--enc_train', default=False, action='store_true',
                         help='Train source encoder')
 
     parser.add_argument('--seqlen', type=int, default=200,
