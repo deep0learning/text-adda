@@ -50,6 +50,21 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
+    # argument setting
+    print("=== Argument Setting ===")
+    print("src: " + args.src)
+    print("tgt: " + args.tgt)
+    print("enc_train: " + str(args.enc_train))
+    print("seqlen: " + str(args.seqlen))
+    print("patience: " + str(args.patience))
+    print("num_epochs_pre: " + str(args.num_epochs_pre))
+    print("log_step_pre: " + str(args.log_step_pre))
+    print("eval_step_pre: " + str(args.eval_step_pre))
+    print("save_step_pre: " + str(args.save_step_pre))
+    print("num_epochs: " + str(args.num_epochs))
+    print("log_step: " + str(args.log_step))
+    print("save_step: " + str(args.save_step))
+
     # init random seed
     init_random_seed(param.manual_seed)
 
