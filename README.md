@@ -22,10 +22,10 @@ python main.py -h
 
 usage: main.py [-h] [--src {book,dvd,electronic,kitchen}]
                [--tgt {book,dvd,electronic,kitchen}] [--seqlen SEQLEN] 
-			   [--patience PATIENCE] [--num_epochs_pre NUM_EPOCHS_PRE] 
-			   [--log_step_pre LOG_STEP_PRE] [--eval_step_pre EVAL_STEP_PRE] 
-			   [--save_step_pre SAVE_STEP_PRE] [--num_epochs NUM_EPOCHS] 
-			   [--log_step LOG_STEP] [--save_step SAVE_STEP]
+	       [--patience PATIENCE] [--num_epochs_pre NUM_EPOCHS_PRE] 
+	       [--log_step_pre LOG_STEP_PRE] [--eval_step_pre EVAL_STEP_PRE] 
+	       [--save_step_pre SAVE_STEP_PRE] [--num_epochs NUM_EPOCHS] 
+	       [--log_step LOG_STEP] [--save_step SAVE_STEP]
 
 Specify Params for Experimental Setting
 
