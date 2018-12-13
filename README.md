@@ -18,8 +18,6 @@ python main.py --src books --tgt dvd --seqlen 200 --patience 5 --num_epochs_pre 
 ### Arguments
 
 ```
-python main.py -h
-
 usage: main.py [-h] [--src {book,dvd,electronic,kitchen}]
                [--tgt {book,dvd,electronic,kitchen}] [--seqlen SEQLEN] 
 	       [--patience PATIENCE] [--num_epochs_pre NUM_EPOCHS_PRE] 
