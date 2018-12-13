@@ -1,4 +1,4 @@
-from .textCNN import TextCNNEncoder, TextCNNClassifier
+from .textcnn import TextCNNEncoder, TextCNNClassifier
 from .discriminator import Discriminator
 from .bert import BERTEncoder, BERTClassifier
 
