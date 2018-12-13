@@ -7,6 +7,12 @@ A PyTorch implementation of [Adversarial Discriminative Domain Adaptation](https
 - pandas
 - pytorch_pretrained_bert
 
+### Install requirements
+
+```
+pip install -r requirements.txt
+```
+
 ## How to run
 
 ```
