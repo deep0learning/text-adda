@@ -11,8 +11,8 @@ A PyTorch implementation of [Adversarial Discriminative Domain Adaptation](https
 
 ```
 python main.py --src books --tgt dvd --seqlen 200 --patience 5 --num_epochs_pre 200 ^
-	       --log_step_pre 32 --eval_step_pre 10 --save_step_pre 100 ^
-	       --num_epochs 100 --log_step 32 --save_step 100
+	       --log_step_pre 10 --eval_step_pre 10 --save_step_pre 100 ^
+	       --num_epochs 100 --log_step 10 --save_step 100
 ```
 
 ### Arguments
