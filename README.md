@@ -1,11 +1,12 @@
 # PyTorch-ADDA-for-Text
 A PyTorch implementation of [Adversarial Discriminative Domain Adaptation](https://arxiv.org/abs/1702.05464) for amazon review dataset.
 
-## Environment
-- Python 3.6
-- PyTorch 0.2.0
+## Requirements
+- torch
+- pandas
+- pytorch_pretrained_bert
 
-## run main
+## How to run
 
 ```
 python main.py --seqlen 200 --patience 5 --num_epochs_pre 200 ^
@@ -13,7 +14,7 @@ python main.py --seqlen 200 --patience 5 --num_epochs_pre 200 ^
 	       --num_epochs 100 --log_step 32 --save_step 100
 ```
 
-### arguments
+### Arguments
 
 ```
 python main.py -h
@@ -45,7 +46,7 @@ optional arguments:
                         Specify save step size for adaptation (default: 100)
 ```
 
-## Network
+### Model
 
 In this experiment, I use three types of network. They are very simple.
 
