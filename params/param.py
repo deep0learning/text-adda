@@ -3,7 +3,7 @@
 # params for dataset and data loader
 data_root = "data"
 process_root = "data/processed"
-batch_size = 64
+batch_size = 128
 
 # params for source dataset
 src_encoder_restore = "snapshots/ADDA-source-encoder-final.pt"

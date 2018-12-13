@@ -18,6 +18,9 @@ if __name__ == '__main__':
     parser.add_argument('--tgt', type=str, default="dvd", choices=["books", "dvd", "electronics", "kitchen"],
                         help="Specify tgt dataset")
 
+    parser.add_argument('--enc_train', default=False, action='store_false',
+                        help='Train source encoder')
+
     parser.add_argument('--seqlen', type=int, default=200,
                         help="Specify maximum sequence length")
 
@@ -107,8 +110,9 @@ if __name__ == '__main__':
     device = torch.device("cuda" if use_cuda else "cpu")
 
     # freeze encoder params
-    for param in src_encoder.parameters():
-        param.requires_grad = False
+    if not args.enc_train:
+        for param in src_encoder.parameters():
+            param.requires_grad = False
 
     # train source model
     print("=== Training classifier for source domain ===")
