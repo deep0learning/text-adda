@@ -11,8 +11,8 @@ A PyTorch implementation of [Adversarial Discriminative Domain Adaptation](https
 
 ```
 python main.py --src books --tgt dvd --seqlen 200 --patience 5 --num_epochs_pre 200 ^
-	       --log_step_pre 13 --eval_step_pre 10 --save_step_pre 100 ^
-	       --num_epochs 100 --log_step 13 --save_step 100
+	       --log_step_pre 1 --eval_step_pre 10 --save_step_pre 100 ^
+	       --num_epochs 100 --log_step 1 --save_step 100
 ```
 
 ### Arguments
@@ -38,14 +38,14 @@ optional arguments:
   --num_epochs_pre NUM_EPOCHS_PRE
                         Specify the number of epochs for pretrain (default: 200)
   --log_step_pre LOG_STEP_PRE
-                        Specify log step size for pretrain (default: 13)
+                        Specify log step size for pretrain (default: 1)
   --eval_step_pre EVAL_STEP_PRE
                         Specify eval step size for pretrain (default: 10)
   --save_step_pre SAVE_STEP_PRE
                         Specify save step size for pretrain (default: 100)
   --num_epochs NUM_EPOCHS
                         Specify the number of epochs for adaptation (default: 100)
-  --log_step LOG_STEP   Specify log step size for adaptation (default: 13)
+  --log_step LOG_STEP   Specify log step size for adaptation (default: 1)
   --save_step SAVE_STEP
                         Specify save step size for adaptation (default: 100)
 ```
