@@ -10,7 +10,7 @@ A PyTorch implementation of [Adversarial Discriminative Domain Adaptation](https
 ## How to run
 
 ```
-python main.py --seqlen 200 --patience 5 --num_epochs_pre 200 ^
+python main.py --src books --tgt dvd --seqlen 200 --patience 5 --num_epochs_pre 200 ^
 	       --log_step_pre 32 --eval_step_pre 10 --save_step_pre 100 ^
 	       --num_epochs 100 --log_step 32 --save_step 100
 ```
@@ -20,16 +20,21 @@ python main.py --seqlen 200 --patience 5 --num_epochs_pre 200 ^
 ```
 python main.py -h
 
-usage: main.py [-h] [--seqlen SEQLEN] [--patience PATIENCE]
-               [--num_epochs_pre NUM_EPOCHS_PRE] [--log_step_pre LOG_STEP_PRE]
-               [--eval_step_pre EVAL_STEP_PRE] [--save_step_pre SAVE_STEP_PRE]
-               [--num_epochs NUM_EPOCHS] [--log_step LOG_STEP]
-               [--save_step SAVE_STEP]
+usage: main.py [-h] [--src {book,dvd,electronic,kitchen}]
+               [--tgt {book,dvd,electronic,kitchen}] [--seqlen SEQLEN] 
+			   [--patience PATIENCE] [--num_epochs_pre NUM_EPOCHS_PRE] 
+			   [--log_step_pre LOG_STEP_PRE] [--eval_step_pre EVAL_STEP_PRE] 
+			   [--save_step_pre SAVE_STEP_PRE] [--num_epochs NUM_EPOCHS] 
+			   [--log_step LOG_STEP] [--save_step SAVE_STEP]
 
 Specify Params for Experimental Setting
 
 optional arguments:
   -h, --help            show this help message and exit
+  --src {book,dvd,electronic,kitchen}
+                        Specify src dataset (default: books)
+  --tgt {book,dvd,electronic,kitchen}
+                        Specify tgt dataset (default: dvd)
   --seqlen SEQLEN       Specify maximum sequence length (default: 200)
   --patience PATIENCE   Specify patience of early stopping for pretrain (default: 5)
   --num_epochs_pre NUM_EPOCHS_PRE

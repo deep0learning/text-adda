@@ -11,6 +11,13 @@ import argparse
 if __name__ == '__main__':
     # argument parsing
     parser = argparse.ArgumentParser(description="Specify Params for Experimental Setting")
+
+    parser.add_argument('--src', type=str, default="books", choices=["books", "dvd", "electronics", "kitchen"],
+                        help="Specify src dataset")
+
+    parser.add_argument('--tgt', type=str, default="dvd", choices=["books", "dvd", "electronics", "kitchen"],
+                        help="Specify tgt dataset")
+
     parser.add_argument('--seqlen', type=int, default=200,
                         help="Specify maximum sequence length")
 
@@ -44,10 +51,11 @@ if __name__ == '__main__':
     init_random_seed(param.manual_seed)
 
     # preprocess data
-    src_train = read_data('./data/processed/electronics/train.txt')
-    src_test = read_data('./data/processed/electronics/test.txt')
-    tgt_train = read_data('./data/processed/kitchen/train.txt')
-    tgt_test = read_data('./data/processed/kitchen/test.txt')
+    print("=== Processing datasets ===")
+    src_train = read_data('./data/processed/' + args.src + '/train.txt')
+    src_test = read_data('./data/processed/' + args.src + '/test.txt')
+    tgt_train = read_data('./data/processed/' + args.tgt + '/train.txt')
+    tgt_test = read_data('./data/processed/' + args.tgt + '/test.txt')
 
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
@@ -82,6 +90,8 @@ if __name__ == '__main__':
     src_data_loader_eval = get_data_loader(src_test_sequences, src_test.label, args.seqlen)
     tgt_data_loader = get_data_loader(tgt_train_sequences, tgt_train.label, args.seqlen)
     tgt_data_loader_eval = get_data_loader(tgt_test_sequences, tgt_test.label, args.seqlen)
+
+    print("=== Datasets successfully loaded ===")
 
     # load models
     src_encoder = init_model(BERTEncoder(),
