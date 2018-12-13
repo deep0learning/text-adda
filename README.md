@@ -19,8 +19,8 @@ python main.py --src books --tgt dvd --seqlen 200 --patience 5 --num_epochs_pre 
 
 ```
 usage: main.py [-h] [--src {book,dvd,electronic,kitchen}]
-               [--tgt {book,dvd,electronic,kitchen}] [--seqlen SEQLEN] 
-	       [--patience PATIENCE] [--num_epochs_pre NUM_EPOCHS_PRE] 
+               [--tgt {book,dvd,electronic,kitchen}] [--enc_train]
+	       [--seqlen SEQLEN] [--patience PATIENCE] [--num_epochs_pre NUM_EPOCHS_PRE] 
 	       [--log_step_pre LOG_STEP_PRE] [--eval_step_pre EVAL_STEP_PRE] 
 	       [--save_step_pre SAVE_STEP_PRE] [--num_epochs NUM_EPOCHS] 
 	       [--log_step LOG_STEP] [--save_step SAVE_STEP]
@@ -33,6 +33,7 @@ optional arguments:
                         Specify src dataset (default: books)
   --tgt {book,dvd,electronic,kitchen}
                         Specify tgt dataset (default: dvd)
+  --enc_train           Train source encoder (default: False)
   --seqlen SEQLEN       Specify maximum sequence length (default: 200)
   --patience PATIENCE   Specify patience of early stopping for pretrain (default: 5)
   --num_epochs_pre NUM_EPOCHS_PRE
