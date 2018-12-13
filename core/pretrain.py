@@ -21,16 +21,16 @@ def train_src(args, encoder, classifier, data_loader, data_loader_eval):
         betas=(param.beta1, param.beta2))
     criterion = nn.CrossEntropyLoss()
 
+    # set train state for Dropout and BN layers
+    encoder.train()
+    classifier.train()
+
     ####################
     # 2. train network #
     ####################
 
     for epoch in range(args.num_epochs_pre):
         for step, (reviews, labels) in enumerate(data_loader):
-
-            # set train state for Dropout and BN layers
-            encoder.train()
-            classifier.train()
 
             # zero gradients for optimizer
             optimizer.zero_grad()
@@ -56,7 +56,7 @@ def train_src(args, encoder, classifier, data_loader, data_loader_eval):
         if (epoch + 1) % args.eval_step_pre == 0:
             # print('Epoch [{}/{}]'.format(epoch + 1, param.num_epochs_pre))
             eval_src(encoder, classifier, data_loader)
-            earlystop.update(eval_src(encoder, classifier, data_loader_eval, True))
+            earlystop.update(eval_src(encoder, classifier, data_loader_eval))
             print()
 
         # save model parameters
@@ -74,7 +74,7 @@ def train_src(args, encoder, classifier, data_loader, data_loader_eval):
     return encoder, classifier
 
 
-def eval_src(encoder, classifier, data_loader, out=False):
+def eval_src(encoder, classifier, data_loader):
     """Evaluate classifier for source domain."""
     # set eval state for Dropout and BN layers
     encoder.eval()
@@ -101,8 +101,11 @@ def eval_src(encoder, classifier, data_loader, out=False):
 
     print("Avg Loss = %.4f, Avg Accuracy = %.4f" % (loss, acc))
 
-    if out:
-        return loss
+    # set train state for Dropout and BN layers
+    encoder.train()
+    classifier.train()
+
+    return loss
 
 
 class EarlyStop:

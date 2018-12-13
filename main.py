@@ -106,9 +106,6 @@ if __name__ == '__main__':
     critic = init_model(Discriminator(),
                         restore=param.d_model_restore)
 
-    use_cuda = torch.cuda.is_available()
-    device = torch.device("cuda" if use_cuda else "cpu")
-
     # freeze encoder params
     if not args.enc_train:
         for param in src_encoder.parameters():

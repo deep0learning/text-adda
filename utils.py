@@ -77,7 +77,7 @@ class TextDataset(Dataset):
 
         seq_data = list()
         for sequence in sequences:
-            sequence.insert(0, 101)
+            sequence.insert(0, 101) # insert [CLS] token
             seqlen = len(sequence)
             if seqlen < maxlen:
                 sequence.extend([0] * (maxlen-seqlen))
