@@ -1,5 +1,5 @@
-# PyTorch-ADDA-for-Text
-A PyTorch implementation of [Adversarial Discriminative Domain Adaptation](https://arxiv.org/abs/1702.05464) for amazon review dataset.
+# Adversarial Discriminative Domain Adaptation with BERT
+A PyTorch implementation of [Adversarial Discriminative Domain Adaptation](https://arxiv.org/abs/1702.05464) for text dataset with BERT.
 
 ## Requirements
 - torch
