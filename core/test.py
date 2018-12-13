@@ -26,4 +26,4 @@ def eval_tgt(encoder, classifier, data_loader):
     loss /= len(data_loader)
     acc /= len(data_loader.dataset)
 
-    print("Avg Loss = %.4f, Avg Accuracy = %.2f" % (loss, acc))
+    print("Avg Loss = %.4f, Avg Accuracy = %.4f" % (loss, acc))
