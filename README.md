@@ -13,7 +13,7 @@ A PyTorch implementation of [Adversarial Discriminative Domain Adaptation](https
 pip install -r requirements.txt
 ```
 
-## How to run
+## Run the test
 
 ```
 python main.py --src books --tgt dvd --seqlen 200 --patience 5 --num_epochs_pre 200 ^
