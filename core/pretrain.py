@@ -6,13 +6,13 @@ from params import param
 from utils import save_model
 
 
-def train_src(encoder, classifier, data_loader, data_loader_eval):
+def train_src(args, encoder, classifier, data_loader, data_loader_eval):
     """Train classifier for source domain."""
     ####################
     # 1. setup network #
     ####################
     # instantiate EarlyStop
-    earlystop = EarlyStop(param.patience)
+    earlystop = EarlyStop(args.patience)
 
     # setup criterion and optimizer
     optimizer = optim.Adam(
@@ -25,7 +25,7 @@ def train_src(encoder, classifier, data_loader, data_loader_eval):
     # 2. train network #
     ####################
 
-    for epoch in range(param.num_epochs_pre):
+    for epoch in range(args.num_epochs_pre):
         for step, (reviews, labels) in enumerate(data_loader):
 
             # set train state for Dropout and BN layers
@@ -44,23 +44,23 @@ def train_src(encoder, classifier, data_loader, data_loader_eval):
             optimizer.step()
 
             # print step info
-            if ((step + 1) % param.log_step_pre == 0):
+            if ((step + 1) % args.log_step_pre == 0):
                 print("Epoch [{}/{}] Step [{}/{}]: loss={}"
                       .format(epoch + 1,
-                              param.num_epochs_pre,
+                              args.num_epochs_pre,
                               step + 1,
                               len(data_loader),
                               loss.item()))
 
         # eval model on test set
-        if (epoch + 1) % param.eval_step_pre == 0:
+        if (epoch + 1) % args.eval_step_pre == 0:
             # print('Epoch [{}/{}]'.format(epoch + 1, param.num_epochs_pre))
             eval_src(encoder, classifier, data_loader)
             earlystop.update(eval_src(encoder, classifier, data_loader_eval, True))
             print()
 
         # save model parameters
-        if (epoch + 1) % param.save_step_pre == 0:
+        if (epoch + 1) % args.save_step_pre == 0:
             save_model(encoder, "ADDA-source-encoder-{}.pt".format(epoch + 1))
             save_model(classifier, "ADDA-source-classifier-{}.pt".format(epoch + 1))
 

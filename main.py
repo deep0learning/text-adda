@@ -6,8 +6,40 @@ from core import eval_src, eval_tgt, train_src, train_tgt
 from models import BERTEncoder, BERTClassifier, Discriminator
 from utils import read_data, get_data_loader, init_model, init_random_seed
 from pytorch_pretrained_bert import BertTokenizer
+import argparse
 
 if __name__ == '__main__':
+    # argument parsing
+    parser = argparse.ArgumentParser(description="Specify Params for Experimental Setting")
+    parser.add_argument('--seqlen', type=int, default=200,
+                        help="Specify maximum sequence length")
+
+    parser.add_argument('--patience', type=int, default=5,
+                        help="Specify patience of early stopping for pretrain")
+
+    parser.add_argument('--num_epochs_pre', type=int, default=200,
+                        help="Specify the number of epochs for pretrain")
+
+    parser.add_argument('--log_step_pre', type=int, default=32,
+                        help="Specify log step size for pretrain")
+
+    parser.add_argument('--eval_step_pre', type=int, default=10,
+                        help="Specify eval step size for pretrain")
+
+    parser.add_argument('--save_step_pre', type=int, default=100,
+                        help="Specify save step size for pretrain")
+
+    parser.add_argument('--num_epochs', type=int, default=100,
+                        help="Specify the number of epochs for adaptation")
+
+    parser.add_argument('--log_step', type=int, default=32,
+                        help="Specify log step size for adaptation")
+
+    parser.add_argument('--save_step', type=int, default=100,
+                        help="Specify save step size for adaptation")
+
+    args = parser.parse_args()
+
     # init random seed
     init_random_seed(param.manual_seed)
 
@@ -46,10 +78,10 @@ if __name__ == '__main__':
 
 
     # load dataset
-    src_data_loader = get_data_loader(src_train_sequences, src_train.label, param.maxlen)
-    src_data_loader_eval = get_data_loader(src_test_sequences, src_test.label, param.maxlen)
-    tgt_data_loader = get_data_loader(tgt_train_sequences, tgt_train.label, param.maxlen)
-    tgt_data_loader_eval = get_data_loader(tgt_test_sequences, tgt_test.label, param.maxlen)
+    src_data_loader = get_data_loader(src_train_sequences, src_train.label, args.seqlen)
+    src_data_loader_eval = get_data_loader(src_test_sequences, src_test.label, args.seqlen)
+    tgt_data_loader = get_data_loader(tgt_train_sequences, tgt_train.label, args.seqlen)
+    tgt_data_loader_eval = get_data_loader(tgt_test_sequences, tgt_test.label, args.seqlen)
 
     # load models
     src_encoder = init_model(BERTEncoder(),
@@ -73,7 +105,7 @@ if __name__ == '__main__':
     # if not (src_encoder.restored and src_classifier.restored and
     #         param.src_model_trained):
     src_encoder, src_classifier = train_src(
-        src_encoder, src_classifier, src_data_loader, src_data_loader_eval)
+        args, src_encoder, src_classifier, src_data_loader, src_data_loader_eval)
 
     # eval source model
     print("=== Evaluating classifier for source domain ===")
@@ -83,7 +115,7 @@ if __name__ == '__main__':
     print("=== Training encoder for target domain ===")
     if not (tgt_encoder.restored and critic.restored and
             param.tgt_model_trained):
-        tgt_encoder = train_tgt(src_encoder, tgt_encoder, critic,
+        tgt_encoder = train_tgt(args, src_encoder, tgt_encoder, critic,
                                 src_data_loader, tgt_data_loader)
 
     # eval target encoder on test set of target dataset

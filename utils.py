@@ -1,6 +1,5 @@
 import os
 import random
-import numpy as np
 import pandas as pd
 import torch
 import torch.backends.cudnn as cudnn
@@ -70,8 +69,11 @@ def get_data_loader(sequences, labels, maxlen=None):
 
 class TextDataset(Dataset):
     def __init__(self, sequences, labels, maxlen):
-        if maxlen is None:
-            maxlen = max([len(sequence) for sequence in sequences])
+
+        seqlen = max([len(sequence) for sequence in sequences])
+
+        if maxlen is None or maxlen > seqlen:
+            maxlen = seqlen
 
         seq_data = list()
         for sequence in sequences:

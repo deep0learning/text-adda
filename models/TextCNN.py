@@ -2,11 +2,12 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-class ConvNetEncoder(nn.Module):
+
+class TextCNNEncoder(nn.Module):
 
     def __init__(self, model_param, pretrain_embed=None):
         """Init ConvNet encoder."""
-        super(ConvNetEncoder, self).__init__()
+        super(TextCNNEncoder, self).__init__()
         self.restored = False
         self.model_param = model_param
 
@@ -54,11 +55,11 @@ class ConvNetEncoder(nn.Module):
         return feat
 
 
-class ConvNetClassifier(nn.Module):
+class TextCNNClassifier(nn.Module):
 
     def __init__(self, model_param):
         """Init ConvNet encoder."""
-        super(ConvNetClassifier, self).__init__()
+        super(TextCNNClassifier, self).__init__()
         self.restored = False
         self.fc2 = nn.Linear(len(model_param.kernel_sizes) * model_param.kernel_num, model_param.class_num)
 
