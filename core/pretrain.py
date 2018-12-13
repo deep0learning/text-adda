@@ -44,13 +44,13 @@ def train_src(args, encoder, classifier, data_loader, data_loader_eval):
             optimizer.step()
 
             # print step info
-            if ((step + 1) % args.log_step_pre == 0):
-                print("Epoch [{}/{}] Step [{}/{}]: loss={}"
-                      .format(epoch + 1,
-                              args.num_epochs_pre,
-                              step + 1,
-                              len(data_loader),
-                              loss.item()))
+            if (step + 1) % args.log_step_pre == 0:
+                print("Epoch [%.3d/%.3d] Step [%.2d/%.2d]: loss=%.4f"
+                      % (epoch + 1,
+                         args.num_epochs_pre,
+                         step + 1,
+                         len(data_loader),
+                         loss.item()))
 
         # eval model on test set
         if (epoch + 1) % args.eval_step_pre == 0:
@@ -99,7 +99,7 @@ def eval_src(encoder, classifier, data_loader, out=False):
     loss /= len(data_loader)
     acc /= len(data_loader.dataset)
 
-    print("Avg Loss = {}, Avg Accuracy = {:2%}".format(loss, acc))
+    print("Avg Loss = %.4f, Avg Accuracy = %.2f" % (loss, acc))
 
     if out:
         return loss

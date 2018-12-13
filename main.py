@@ -27,7 +27,7 @@ if __name__ == '__main__':
     parser.add_argument('--num_epochs_pre', type=int, default=200,
                         help="Specify the number of epochs for pretrain")
 
-    parser.add_argument('--log_step_pre', type=int, default=32,
+    parser.add_argument('--log_step_pre', type=int, default=1,
                         help="Specify log step size for pretrain")
 
     parser.add_argument('--eval_step_pre', type=int, default=10,
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     parser.add_argument('--num_epochs', type=int, default=100,
                         help="Specify the number of epochs for adaptation")
 
-    parser.add_argument('--log_step', type=int, default=32,
+    parser.add_argument('--log_step', type=int, default=1,
                         help="Specify log step size for adaptation")
 
     parser.add_argument('--save_step', type=int, default=100,

@@ -94,15 +94,15 @@ def train_tgt(args, src_encoder, tgt_encoder, critic,
             # 2.3 print step info #
             #######################
             if (step + 1) % args.log_step == 0:
-                print("Epoch [{}/{}] Step [{}/{}]:"
-                      "d_loss={:.5f} g_loss={:.5f} acc={:.5f}"
-                      .format(epoch + 1,
-                              args.num_epochs,
-                              step + 1,
-                              len_data_loader,
-                              loss_critic.item(),
-                              loss_tgt.item(),
-                              acc.item()))
+                print("Epoch [%.3d/%.3d] Step [%.2d/%.2d]:"
+                      "d_loss=%.4f g_loss=%.4f acc=%.4f"
+                      % (epoch + 1,
+                         args.num_epochs,
+                         step + 1,
+                         len_data_loader,
+                         loss_critic.item(),
+                         loss_tgt.item(),
+                         acc.item()))
 
         #############################
         # 2.4 save model argseters #
