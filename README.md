@@ -1,5 +1,6 @@
 # Adversarial Discriminative Domain Adaptation with BERT
 A PyTorch implementation of [Adversarial Discriminative Domain Adaptation](https://arxiv.org/abs/1702.05464) for text dataset with BERT.
+This code mainly refer to [corenel's pytorch-adda](https://github.com/corenel/pytorch-adda)
 
 ## Requirements
 - torch
