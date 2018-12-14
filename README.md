@@ -57,9 +57,7 @@ optional arguments:
                         Specify save step size for adaptation (default: 100)
 ```
 
-### Model
-
-In this experiment, I use three types of network. They are very simple.
+## Model
 
 - BERT encoder
 
@@ -138,9 +136,9 @@ BERTEncoder(
 BERTClassifier(
   (classifier): Sequential(
     (0): Dropout(p=0.1)
-    (1): Linear(in_features=768, out_features=96, bias=True)
+    (1): Linear(in_features=768, out_features=768, bias=True)
     (2): LeakyReLU(negative_slope=0.01)
-    (3): Linear(in_features=96, out_features=2, bias=True)
+    (3): Linear(in_features=768, out_features=2, bias=True)
   )
 )
 ```
